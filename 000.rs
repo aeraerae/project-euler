@@ -8,16 +8,16 @@ fn main() {
     stdin().read_to_string(&mut buf).unwrap();
     let mut scan = Scanner::new(buf.split_whitespace().peekable());
 
-    let mut tc = 0;
+    let mut tc = 1;
     if tc != 1 { tc = scan.next::<usize>(); }
     for i in 0..tc {
-        hyperbolic(&mut scan, &mut out, i);
+        solve(&mut scan, &mut out, i);
     }
     print!("{out}");
 }
 
 // https://youtu.be/r89YusWbFZE
-fn hyperbolic<'a>(scan: &mut Scanner<'a, Peekable<SplitWhitespace<'a>>>, out: &mut String, _tc: usize) {
+fn solve<'a>(scan: &mut Scanner<'a, Peekable<SplitWhitespace<'a>>>, out: &mut String, _tc: usize) {
     let n: usize = scan.next();
 
     let mut ans = 0;
