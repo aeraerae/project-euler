@@ -1,0 +1,46 @@
+// sqrt(N) factorization
+fn factorize(n: usize) -> usize {
+    if n <= 3 { return n; }
+
+    let mut i = 2;
+    while i * i <= n {
+        if n % i == 0 { return i; }
+        i += 1;
+    }
+
+    n
+}
+
+// GCD, LCM
+fn gcd(mut a: usize, mut b: usize) -> usize {
+    if b > a {
+        (a, b) = (b, a);
+    }
+    if b == 0 { return a; }
+    while a % b != 0 {
+        let r = a % b;
+        a = b;
+        b = r; }
+    b 
+}
+
+fn lcm(a: usize, b: usize) -> usize {
+    a / gcd(a, b) * b
+}
+
+// Linear Sieve
+fn sieve(n: usize) -> (Vec<usize>, Vec<usize>) {
+    let mut a = vec![0; n + 1];
+    let mut v = Vec::with_capacity(n);
+    for i in 2..=n {
+        if a[i] == 0 { v.push(i); }
+
+        for &j in &v {
+            if i * j > n { break; }
+            a[i * j] = j;
+            if i % j == 0 { break; }
+        }
+    }
+
+    (a, v)
+}
