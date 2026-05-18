@@ -19,26 +19,20 @@ fn main() {
 // https://youtu.be/r89YusWbFZE
 fn solve<'a>(scan: &mut Scanner<'a, Peekable<SplitWhitespace<'a>>>, out: &mut String, _tc: usize) {
     let n: usize = scan.next();
-    
-    let (_a, v) = sieve(200_000);
 
-    writeln!(out, "{}", v[n - 1]).unwrap();
-}
-
-fn sieve(n: usize) -> (Vec<usize>, Vec<usize>) {
-    let mut a = vec![0; n + 1];
-    let mut v = Vec::with_capacity(n);
-    for i in 2..=n {
-        if a[i] == 0 { v.push(i); }
-
-        for &j in &v {
-            if i * j > n { break; }
-            a[i * j] = j;
-            if i % j == 0 { break; }
+    let mut dp = vec![vec![0usize; 41]; 41];
+    dp[0][0] = 1;
+    for i in 1..=40 {
+        for j in 0..=i {
+            if j == 0 || j == i {
+                dp[i][j] = 1;
+                continue;
+            }
+            dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
         }
     }
 
-    (a, v)
+    writeln!(out, "{}", dp[n * 2][n]).unwrap();
 }
 
 struct Scanner<'a, I: Iterator<Item = &'a str>> {

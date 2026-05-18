@@ -19,20 +19,54 @@ fn main() {
 // https://youtu.be/r89YusWbFZE
 fn solve<'a>(scan: &mut Scanner<'a, Peekable<SplitWhitespace<'a>>>, out: &mut String, _tc: usize) {
     let n: usize = scan.next();
-
-    let mut dp = vec![vec![0usize; 41]; 41];
-    dp[0][0] = 1;
-    for i in 1..=40 {
-        for j in 0..=i {
-            if j == 0 || j == i {
-                dp[i][j] = 1;
-                continue;
-            }
-            dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j];
+    let mut a = vec![vec![0usize; 20]; 20];
+    for i in 0..20 {
+        for j in 0..20 {
+            a[i][j] = scan.next();
         }
     }
 
-    writeln!(out, "{}", dp[n * 2][n]).unwrap();
+    let mut ans = 0;
+    for i in 0..20 {
+        for j in 0..(20 + 1 - n) {
+            let mut cur = 1;
+            for k in 0..n {
+                cur *= a[i][j + k];
+            }
+            ans = max(ans, cur);
+        }
+    }
+    
+    for j in 0..20 {
+        for i in 0..(20 + 1 - n) {
+            let mut cur = 1;
+            for k in 0..n {
+                cur *= a[i + k][j];
+            }
+            ans = max(ans, cur);
+        }
+    }
+
+    for i in 0..(20 + 1 - n) {
+        for j in 0..(20 + 1 - n) {
+            let mut cur = 1;
+            for k in 0..n {
+                cur *= a[i + k][j + k];
+            }
+            ans = max(ans, cur);
+        }
+    }
+
+    for i in 0..(20 + 1 - n) {
+        for j in 0..(20 + 1 - n) {
+            let mut cur = 1;
+            for k in 0..n {
+                cur *= a[i + n - 1 - k][j + k];
+            }
+            ans = max(ans, cur);
+        }
+    }
+    writeln!(out, "{ans}").unwrap();
 }
 
 struct Scanner<'a, I: Iterator<Item = &'a str>> {

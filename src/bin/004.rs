@@ -17,7 +17,7 @@ fn main() {
 }
 
 // https://youtu.be/r89YusWbFZE
-fn solve<'a>(scan: &mut Scanner<'a, Peekable<SplitWhitespace<'a>>>, out: &mut String, _tc: usize) {
+fn solve<'a>(_scan: &mut Scanner<'a, Peekable<SplitWhitespace<'a>>>, out: &mut String, _tc: usize) {
     //let n: usize = scan.next();
 
     let mut ans = 0;
